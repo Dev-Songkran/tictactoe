@@ -1,38 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#### Database: `TEST`
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```
+CREATE DATABASE IF NOT EXISTS `TEST` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci;
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Table structure for table `games`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+CREATE TABLE `games` (
+  `id` int(11) NOT NULL,
+  `last_first_player` varchar(255) DEFAULT NULL,
+  `win` enum('o','x','draw') DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### Table structure for table `users`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+#### Indexes for table `games`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`` ALTER TABLE `games`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userId` (`userId`); ``
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Indexes for table `users`
 
-## Deploy on Vercel
+`` ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`); ``
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### AUTO_INCREMENT for table `games`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`` ALTER TABLE `games`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT; ``
+
+#### AUTO_INCREMENT for table `users`
+
+`` ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT; ``
+
+#### Constraints for table `games`
+
+`` ALTER TABLE `games`
+  ADD CONSTRAINT `games_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+COMMIT; ``

@@ -56,7 +56,7 @@ const Layout: FC<LayoutProps> = (props) => {
                     A
                   </Avatar>
                   <Box>
-                    <Text>Username</Text>
+                    <Text>{auth?.user?.username}</Text>
                     <Text size="xs" color="dimmed">
                       Welcome
                     </Text>
