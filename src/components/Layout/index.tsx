@@ -66,7 +66,7 @@ const Layout: FC<LayoutProps> = (props) => {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item onClick={signOut} icon={<IconLogout size={14} />}>
-                ออกจากระบบ
+                Log out
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
