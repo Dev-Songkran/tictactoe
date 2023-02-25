@@ -26,12 +26,13 @@ export const useGame = create<Game>()((set) => ({
       const turn = payload.turn === "x" ? "o" : "x";
       return { ...state, currentBoard, turn };
     }),
-  setWinner: (payload, callback) => {
+  setWinner: async (payload, callback) => {
+    set((state) => ({ ...state, winner: payload }));
     if (payload !== null) {
-      axios.post(`/api/updateResult`, { player_win: payload });
-      callback();
+      await axios.post(`/api/updateResult`, { player_win: payload });
+      await callback();
     }
-    return set((state) => ({ ...state, winner: payload }));
+    return;
   },
   reset: () =>
     set((state) => {
