@@ -52,9 +52,12 @@ const Layout: FC<LayoutProps> = (props) => {
             <Menu.Target>
               <UnstyledButton>
                 <Group>
-                  <Avatar size={40} color="blue">
-                    A
-                  </Avatar>
+                  <Avatar
+                    size={40}
+                    color="blue"
+                    src="https://xsgames.co/randomusers/avatar.php?g=pixel"
+                    alt={auth?.user?.username}
+                  />
                   <Box>
                     <Text>{auth?.user?.username}</Text>
                     <Text size="xs" color="dimmed">
